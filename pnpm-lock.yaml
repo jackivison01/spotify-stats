@@ -1,0 +1,98 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      '@types/react':
+        specifier: ^19.0.12
+        version: 19.0.12
+      '@types/react-dom':
+        specifier: ^19.0.4
+        version: 19.0.4(@types/react@19.0.12)
+      css-modules-typescript-loader:
+        specifier: ^4.0.1
+        version: 4.0.1
+
+packages:
+
+  '@types/react-dom@19.0.4':
+    resolution: {integrity: sha512-4fSQ8vWFkg+TGhePfUzVmat3eC14TXYSsiiDSLI0dVLsrm9gZFABjPy/Qu6TKgl1tq1Bu1yDsuQgY3A3DOjCcg==}
+    peerDependencies:
+      '@types/react': ^19.0.0
+
+  '@types/react@19.0.12':
+    resolution: {integrity: sha512-V6Ar115dBDrjbtXSrS+/Oruobc+qVbbUxDFC1RSbRqLt5SYvxxyIDrSC85RWml54g+jfNeEMZhEj7wW07ONQhA==}
+
+  big.js@5.2.2:
+    resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
+
+  css-modules-typescript-loader@4.0.1:
+    resolution: {integrity: sha512-vXrUAwPGcRaopnGdg7I5oqv/NSSKQRN5L80m3f49uSGinenU5DTNsMFHS+2roh5tXqpY5+yAAKAl7A2HDvumzg==}
+
+  csstype@3.1.3:
+    resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
+
+  emojis-list@3.0.0:
+    resolution: {integrity: sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==}
+    engines: {node: '>= 4'}
+
+  json5@1.0.2:
+    resolution: {integrity: sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==}
+    hasBin: true
+
+  levdist@1.0.0:
+    resolution: {integrity: sha512-YguwC2spb0pqpJM3a5OsBhih/GG2ZHoaSHnmBqhEI7997a36buhqcRTegEjozHxyxByIwLpZHZTVYMThq+Zd3g==}
+
+  line-diff@2.1.2:
+    resolution: {integrity: sha512-rkfwQJRXQHo14BjphIid+73/a4nf/VVAWDqhIr3WtWXrybGYnV27X8KqngIKH1cxd0z7u2OM/JTV1g6I57z2EQ==}
+
+  loader-utils@1.4.2:
+    resolution: {integrity: sha512-I5d00Pd/jwMD2QCduo657+YM/6L3KZu++pmX9VFncxaxvHcru9jx1lBaFft+r4Mt2jK0Yhp41XlRAihzPxHNCg==}
+    engines: {node: '>=4.0.0'}
+
+  minimist@1.2.8:
+    resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
+
+snapshots:
+
+  '@types/react-dom@19.0.4(@types/react@19.0.12)':
+    dependencies:
+      '@types/react': 19.0.12
+
+  '@types/react@19.0.12':
+    dependencies:
+      csstype: 3.1.3
+
+  big.js@5.2.2: {}
+
+  css-modules-typescript-loader@4.0.1:
+    dependencies:
+      line-diff: 2.1.2
+      loader-utils: 1.4.2
+
+  csstype@3.1.3: {}
+
+  emojis-list@3.0.0: {}
+
+  json5@1.0.2:
+    dependencies:
+      minimist: 1.2.8
+
+  levdist@1.0.0: {}
+
+  line-diff@2.1.2:
+    dependencies:
+      levdist: 1.0.0
+
+  loader-utils@1.4.2:
+    dependencies:
+      big.js: 5.2.2
+      emojis-list: 3.0.0
+      json5: 1.0.2
+
+  minimist@1.2.8: {}
