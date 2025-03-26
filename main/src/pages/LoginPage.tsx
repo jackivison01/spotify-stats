@@ -1,4 +1,5 @@
 import React from 'react';
+import LogInButton from '../components/login/LogInButton';
 
 const LoginPage: React.FC = () => {
   const handleLogin = () => {
@@ -9,9 +10,7 @@ const LoginPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
       <h1>Login to Spotify Stats</h1>
-      <button onClick={handleLogin} style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>
-        Log In
-      </button>
+      <LogInButton handleLogin={handleLogin} />
     </div>
   );
 };
