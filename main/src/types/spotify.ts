@@ -20,6 +20,19 @@ export type Image = {
     width: number;
 };
 
+export type Artist = {
+    external_urls: ExternalUrls;
+    followers: Followers;
+    genres: string[];
+    href: string;
+    id: string;
+    images: Image[];
+    name: string;
+    popularity: number;
+    type: 'artist';
+    uri: string;
+};
+
 export type SpotifyProfile = {
     country: string;
     display_name: string;
