@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getSpotifyProfile } from "../services/api";
+import { SpotifyProfile } from "../types/spotify";
 
 const ProfilePage: React.FC = () => {
-  const [displayName, setDisplayName] = useState<string>("");
+    const [userProfile, setUserProfile] = useState<SpotifyProfile | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,8 +16,9 @@ const ProfilePage: React.FC = () => {
         const user_data = await getSpotifyProfile(access_token);
 
         if (user_data) {
-          setDisplayName(user_data.display_name);
+            setUserProfile(user_data);
         }
+        console.log(user_data);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -25,7 +27,19 @@ const ProfilePage: React.FC = () => {
     fetchData();
   }, []);
 
-  return <h1>{displayName || "Loading..."}</h1>;
+  return (
+    <div>
+      {userProfile ? (
+        <>
+          <h1>{userProfile.display_name}</h1>
+          <img src={userProfile.images[0]?.url} alt="Profile" style={{ width: 150, borderRadius: "50%" }} />
+          <p>Followers: {userProfile.followers.total}</p>
+        </>
+      ) : (
+        <p>Loading profile...</p>
+      )}
+    </div>
+  );
 };
 
 export default ProfilePage;
