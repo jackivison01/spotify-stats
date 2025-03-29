@@ -15,7 +15,7 @@ const CallbackPage: React.FC = () => {
     if (token) {
       setAccessToken(token);
       // Optionally store the token in localStorage or sessionStorage
-      localStorage.setItem('spotifyAccessToken', token);
+      localStorage.setItem('spotify_access_token', token);
       // Navigate to a page where you can use the token, e.g., the home page
       navigate('/home');
     } else {
