@@ -1,5 +1,7 @@
 // src/types/spotify.ts
 
+import { Album } from "./album";
+
 export type ExplicitContent = {
     filter_enabled: boolean;
     filter_locked: boolean;
@@ -32,6 +34,11 @@ export type Artist = {
     type: 'artist';
     uri: string;
 };
+
+export type Track = {
+    album: Album,
+
+}
 
 export type SpotifyProfile = {
     country: string;
