@@ -3,8 +3,8 @@ import LogInButton from '../components/login/LogInButton';
 
 const LoginPage: React.FC = () => {
   const handleLogin = () => {
-    const clientId = '49bc21756a90498798430c482a071f4d';
-    const redirectUri = 'http://localhost:5173/callback';
+    const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+    const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URL;
     const scopes = [
       'user-read-private',
       'user-read-email',
