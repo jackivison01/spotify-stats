@@ -61,11 +61,11 @@ const ProfilePage: React.FC = () => {
       </div>
       <div>
         <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "30px" }}>
-          <div>
+          <div style={{ flex: 1 }}>
             <h2>Top Artists</h2>
             <ArtistContainer artists={topArtists} timeRange={artistTimeRange} setTimeRange={setArtistTimeRange} />
           </div>
-          <div>
+          <div style={{ flex: 1 }}>
             <h2>Top Tracks</h2>
             <TrackContainer tracks={topTracks} timeRange={trackTimeRange} setTimeRange={setTrackTimeRange} />
           </div>
