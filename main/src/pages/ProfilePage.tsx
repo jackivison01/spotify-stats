@@ -60,8 +60,10 @@ const ProfilePage: React.FC = () => {
       </div>
       <div>
         <h2>Top Artists</h2>
-        <ArtistContainer artists={topArtists} timeRange={artistTimeRange} setTimeRange={setArtistTimeRange} />
-        <TrackContainer tracks={topTracks} timeRange={trackTimeRange} setTimeRange={setTrackTimeRange} />
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "20px" }}>
+          <ArtistContainer artists={topArtists} timeRange={artistTimeRange} setTimeRange={setArtistTimeRange} />
+          <TrackContainer tracks={topTracks} timeRange={trackTimeRange} setTimeRange={setTrackTimeRange} />
+        </div>
       </div>
     </>
   );
