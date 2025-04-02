@@ -61,8 +61,6 @@ const ProfilePage: React.FC = () => {
           setTopTracks(top_tracks);
           localStorage.setItem("top_tracks", JSON.stringify(top_tracks));
         }
-        console.log(top_artists);
-        console.log(user_data);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
