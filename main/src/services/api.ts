@@ -18,8 +18,7 @@ export async function getSpotifyProfile(accessToken: string): Promise<SpotifyPro
     }
 }
 
-export async function getTopArtists(accessToken: string, total: number): Promise<Artist[] | null> {
-    const time_range: string = 'short_term';
+export async function getTopArtists(accessToken: string, total: number, time_range: string): Promise<Artist[] | null> {
     try {
         const response = await axios.get<{ items: Artist[] }>(
             `https://api.spotify.com/v1/me/top/artists?time_range=${time_range}&limit=${total}&offset=0`,

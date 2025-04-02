@@ -3,10 +3,12 @@ import { getSpotifyProfile, getTopArtists } from "../services/api";
 import { SpotifyProfile } from "../types/profile";
 import { Artist } from "../types/artist";
 import ArtistContainer from "../components/profile/ArtistContainer";
+import { TIME_RANGE_DEFAULT, TIME_RANGES } from "../constants/profile";
 
 const ProfilePage: React.FC = () => {
   const [userProfile, setUserProfile] = useState<SpotifyProfile | null>(null);
   const [topArtists, setTopArtists] = useState<Artist[]>([]);
+  const [timeRange, setTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +19,7 @@ const ProfilePage: React.FC = () => {
           return;
         }
         const user_data = await getSpotifyProfile(access_token);
-        const top_artists = await getTopArtists(access_token, 3);
+        const top_artists = await getTopArtists(access_token, 3, timeRange);
 
         if (user_data) {
           setUserProfile(user_data);
@@ -33,7 +35,7 @@ const ProfilePage: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+  }, [timeRange]);
 
   return (
     <>
@@ -50,7 +52,7 @@ const ProfilePage: React.FC = () => {
       </div>
       <div>
         <h2>Top Artists</h2>
-        <ArtistContainer artists={topArtists} />
+        <ArtistContainer artists={topArtists} timeRange={timeRange} setTimeRange={setTimeRange} />
       </div>
     </>
   );
