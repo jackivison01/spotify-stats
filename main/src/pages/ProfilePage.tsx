@@ -14,7 +14,30 @@ const ProfilePage: React.FC = () => {
   const [artistTimeRange, setArtistTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
   const [trackTimeRange, setTrackTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
 
+  const checkDataInLocalStorage = () => {
+    const storedUserProfile = localStorage.getItem("user_profile");
+    const storedTopArtists = localStorage.getItem("top_artists");
+    const storedTopTracks = localStorage.getItem("top_tracks");
+    if (storedUserProfile) {
+      setUserProfile(JSON.parse(storedUserProfile));
+    }
+    if (storedTopArtists) {
+      setTopArtists(JSON.parse(storedTopArtists));
+    }
+    if (storedTopTracks) {
+      setTopTracks(JSON.parse(storedTopTracks));
+    }
+    if (storedUserProfile || storedTopArtists || storedTopTracks) {
+      return true;
+    }
+    return false;
+  }
+
   useEffect(() => {
+    if (checkDataInLocalStorage()) {
+      console.log("Data loaded from cache.")
+      return;
+    }
     const fetchData = async () => {
       try {
         const access_token = localStorage.getItem("spotify_access_token");
@@ -28,12 +51,15 @@ const ProfilePage: React.FC = () => {
 
         if (user_data) {
           setUserProfile(user_data);
+          localStorage.setItem("user_profile", JSON.stringify(user_data));
         }
         if (top_artists) {
           setTopArtists(top_artists);
+          localStorage.setItem("top_artists", JSON.stringify(top_artists));
         }
         if (top_tracks) {
           setTopTracks(top_tracks);
+          localStorage.setItem("top_tracks", JSON.stringify(top_tracks));
         }
         console.log(top_artists);
         console.log(user_data);

@@ -17,14 +17,16 @@ const AppRoutes: React.FC = () => {
 
   return (
     <>
-      {!isLoginPage && <Sidebar />}
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/callback" element={<CallbackPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/recently-played" element={<RecentlyPlayedPage />} />
-      </Routes>
+      <Container maxWidth="lg" sx={{ padding: '2rem' }}>
+        {!isLoginPage && <Sidebar />}
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/callback" element={<CallbackPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/recently-played" element={<RecentlyPlayedPage />} />
+        </Routes>
+      </Container>
     </>
   );
 };
