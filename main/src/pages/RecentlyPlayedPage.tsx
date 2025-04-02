@@ -34,6 +34,9 @@ export default function RecentlyPlayedPage() {
     };
 
     fetchCurrentlyPlaying();
+    // Set interval to fetch currently playing track every 15 seconds
+    const interval = setInterval(fetchCurrentlyPlaying, 15000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
