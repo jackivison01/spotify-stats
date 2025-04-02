@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SpotifyProfile } from '../types/spotify';
+import { SpotifyProfile } from '../types/profile';
 import { Track } from '../types/track';
 import { Artist } from '../types/album';
 
@@ -18,12 +18,12 @@ export async function getSpotifyProfile(accessToken: string): Promise<SpotifyPro
     }
 }
 
-export async function getTopArtists(accessToken: string): Promise<Artist[] | null> {
+export async function getTopArtists(accessToken: string, total: number): Promise<Artist[] | null> {
     console.log(accessToken);
     return null;
 }
 
-export async function getTopTracks(accessToken: string): Promise<Track[] | null> {
+export async function getTopTracks(accessToken: string, total: number): Promise<Track[] | null> {
     console.log(accessToken);
     return null;
 }

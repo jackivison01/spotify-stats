@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { getSpotifyProfile } from "../services/api";
-import { SpotifyProfile } from "../types/spotify";
+import { SpotifyProfile } from "../types/profile";
 
 const ProfilePage: React.FC = () => {
-    const [userProfile, setUserProfile] = useState<SpotifyProfile | null>(null);
+  const [userProfile, setUserProfile] = useState<SpotifyProfile | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const access_token = localStorage.getItem("spotify_access_token");
         if (!access_token) {
-            console.error("Access token not found. Please log in.");
-            return;
+          console.error("Access token not found. Please log in.");
+          return;
         }
         const user_data = await getSpotifyProfile(access_token);
 
         if (user_data) {
-            setUserProfile(user_data);
+          setUserProfile(user_data);
         }
         console.log(user_data);
       } catch (error) {
