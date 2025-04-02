@@ -36,6 +36,7 @@ export type Track = {
     reason: string;
   };
   name: string;
+  popularity: number;
   preview_url: string;
   track_number: number;
   type: string;

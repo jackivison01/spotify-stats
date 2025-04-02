@@ -2,6 +2,7 @@ import axios from 'axios';
 import { SpotifyProfile } from '../types/profile';
 import { Track } from '../types/track';
 import { Artist } from '../types/artist';
+import { CurrentlyPlaying } from '../types/currently_playing';
 
 export async function getSpotifyProfile(accessToken: string): Promise<SpotifyProfile | null> {
     try {
@@ -51,6 +52,23 @@ export async function getTopTracks(accessToken: string, total: number, time_rang
     }
     catch (error) {
         console.log('Error fetching top tracks:', error);
+        return null;
+    }
+}
+
+export async function getCurrentlyPlaying(accessToken: string): Promise<CurrentlyPlaying | null> {
+    try {
+        const response = await axios.get<{ item: CurrentlyPlaying }>(
+            'https://api.spotify.com/v1/me/player/currently-playing',
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        return response.data.item;
+    } catch (error) {
+        console.error('Error fetching currently playing track:', error);
         return null;
     }
 }
