@@ -24,7 +24,7 @@ export default function TrackContainer({ tracks, timeRange, setTimeRange }: Trac
       <ul style={{ listStyleType: "none", padding: 0 }}>
         {tracks.map((track) => (
           <li key={track.id} style={{ display: "flex", alignItems: "center", marginBottom: 10 }}>
-            <img src={track.album.images[0]?.url} alt={track.name} style={{ width: 50, borderRadius: "50%" }} />
+            <img src={track.album.images[0]?.url} alt={track.name} style={{ width: 50 }} />
             <p>{track.name}</p>
           </li>
         ))}

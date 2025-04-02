@@ -10,6 +10,7 @@ const LoginPage: React.FC = () => {
       'user-read-email',
       'playlist-read-private',
       'user-top-read',
+      'user-read-currently-playing',
     ]; // Add more scopes as needed
 
     const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${clientId}&redirect_uri=${encodeURIComponent(

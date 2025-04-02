@@ -66,9 +66,10 @@ export async function getCurrentlyPlaying(accessToken: string): Promise<Currentl
                 },
             }
         );
-        return response.data.item;
-    } catch (error) {
-        console.error('Error fetching currently playing track:', error);
+        return response.data ?? null;
+    } catch (error: any) {
+        console.error('Error fetching currently playing track:', error.response?.data || error.message);
         return null;
     }
 }
+
