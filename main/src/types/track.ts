@@ -1,3 +1,5 @@
+import { Album } from "./album";
+
 // track object used when getting users top tracks
 export type ExternalUrls = {
   spotify: string;
@@ -13,6 +15,7 @@ export type Artist = {
 };
 
 export type Track = {
+  album: Album;
   artists: Artist[];
   available_markets: string[];
   disc_number: number;

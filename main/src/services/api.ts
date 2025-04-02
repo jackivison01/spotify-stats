@@ -37,7 +37,20 @@ export async function getTopArtists(accessToken: string, total: number, time_ran
 }
 
 
-export async function getTopTracks(accessToken: string, total: number): Promise<Track[] | null> {
-    console.log(accessToken);
-    return null;
+export async function getTopTracks(accessToken: string, total: number, time_range: string): Promise<Track[] | null> {
+    try {
+        const response = await axios.get<{ items: Track[] }>(
+            `https://api.spotify.com/v1/me/top/tracks?time_range=${time_range}&limit=${total}&offset=0`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        return response.data.items;
+    }
+    catch (error) {
+        console.log('Error fetching top tracks:', error);
+        return null;
+    }
 }

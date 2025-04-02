@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { getSpotifyProfile, getTopArtists } from "../services/api";
+import { getSpotifyProfile, getTopArtists, getTopTracks } from "../services/api";
 import { SpotifyProfile } from "../types/profile";
 import { Artist } from "../types/artist";
+import { Track } from "../types/track";
 import ArtistContainer from "../components/profile/ArtistContainer";
-import { TIME_RANGE_DEFAULT, TIME_RANGES } from "../constants/profile";
+import { TIME_RANGE_DEFAULT } from "../constants/profile";
+import TrackContainer from "../components/profile/TrackContainer";
 
 const ProfilePage: React.FC = () => {
   const [userProfile, setUserProfile] = useState<SpotifyProfile | null>(null);
   const [topArtists, setTopArtists] = useState<Artist[]>([]);
-  const [timeRange, setTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
+  const [topTracks, setTopTracks] = useState<Track[]>([]);
+  const [artistTimeRange, setArtistTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
+  const [trackTimeRange, setTrackTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,13 +23,17 @@ const ProfilePage: React.FC = () => {
           return;
         }
         const user_data = await getSpotifyProfile(access_token);
-        const top_artists = await getTopArtists(access_token, 3, timeRange);
+        const top_artists = await getTopArtists(access_token, 3, artistTimeRange);
+        const top_tracks = await getTopTracks(access_token, 3, trackTimeRange);
 
         if (user_data) {
           setUserProfile(user_data);
         }
         if (top_artists) {
           setTopArtists(top_artists);
+        }
+        if (top_tracks) {
+          setTopTracks(top_tracks);
         }
         console.log(top_artists);
         console.log(user_data);
@@ -35,7 +43,7 @@ const ProfilePage: React.FC = () => {
     };
 
     fetchData();
-  }, [timeRange]);
+  }, [artistTimeRange, trackTimeRange]);
 
   return (
     <>
@@ -52,7 +60,8 @@ const ProfilePage: React.FC = () => {
       </div>
       <div>
         <h2>Top Artists</h2>
-        <ArtistContainer artists={topArtists} timeRange={timeRange} setTimeRange={setTimeRange} />
+        <ArtistContainer artists={topArtists} timeRange={artistTimeRange} setTimeRange={setArtistTimeRange} />
+        <TrackContainer tracks={topTracks} timeRange={trackTimeRange} setTimeRange={setTrackTimeRange} />
       </div>
     </>
   );
