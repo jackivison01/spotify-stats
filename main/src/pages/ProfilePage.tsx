@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getSpotifyProfile, getTopArtists } from "../services/api";
 import { SpotifyProfile } from "../types/profile";
 import { Artist } from "../types/artist";
+import ArtistContainer from "../components/profile/ArtistContainer";
 
 const ProfilePage: React.FC = () => {
   const [userProfile, setUserProfile] = useState<SpotifyProfile | null>(null);
@@ -49,18 +50,7 @@ const ProfilePage: React.FC = () => {
       </div>
       <div>
         <h2>Top Artists</h2>
-        {topArtists.length > 0 ? (
-          <ul>
-            {topArtists.map((artist) => (
-              <li key={artist.id}>
-                <img src={artist.images[0]?.url} alt={artist.name} style={{ width: 50, borderRadius: "50%" }} />
-                {artist.name}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Loading top artists...</p>
-        )}
+        <ArtistContainer artists={topArtists} />
       </div>
     </>
   );
