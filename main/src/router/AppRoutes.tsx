@@ -1,6 +1,7 @@
 // src/routes.tsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { Container } from "@mui/material";
 import LoginPage from "../pages/LoginPage.tsx";
 import HomePage from "../pages/HomePage.tsx";
 import CallbackPage from "../pages/CallbackPage.tsx";
@@ -16,7 +17,7 @@ const AppRoutes: React.FC = () => {
 
   return (
     <>
-      {!isLoginPage && <Sidebar />}  {/* Conditionally render Sidebar based on the route */}
+      {!isLoginPage && <Sidebar />}
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/callback" element={<CallbackPage />} />
