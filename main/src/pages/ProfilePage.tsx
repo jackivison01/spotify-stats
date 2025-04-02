@@ -4,7 +4,7 @@ import { SpotifyProfile } from "../types/profile";
 import { Artist } from "../types/artist";
 import { Track } from "../types/track";
 import ArtistContainer from "../components/profile/ArtistContainer";
-import { TIME_RANGE_DEFAULT } from "../constants/profile";
+import { TIME_RANGE_DEFAULT, MAX_DISPLAY } from "../constants/profile";
 import TrackContainer from "../components/profile/TrackContainer";
 
 const ProfilePage: React.FC = () => {
@@ -23,8 +23,8 @@ const ProfilePage: React.FC = () => {
           return;
         }
         const user_data = await getSpotifyProfile(access_token);
-        const top_artists = await getTopArtists(access_token, 3, artistTimeRange);
-        const top_tracks = await getTopTracks(access_token, 3, trackTimeRange);
+        const top_artists = await getTopArtists(access_token, MAX_DISPLAY, artistTimeRange);
+        const top_tracks = await getTopTracks(access_token, MAX_DISPLAY, trackTimeRange);
 
         if (user_data) {
           setUserProfile(user_data);
@@ -47,7 +47,8 @@ const ProfilePage: React.FC = () => {
 
   return (
     <>
-      <div>
+      <h1 style={{ textAlign: "center", marginTop: 20 }}>Profile</h1>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 20 }}>
         {userProfile ? (
           <>
             <h1>{userProfile.display_name}</h1>
@@ -59,10 +60,15 @@ const ProfilePage: React.FC = () => {
         )}
       </div>
       <div>
-        <h2>Top Artists</h2>
-        <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "20px" }}>
-          <ArtistContainer artists={topArtists} timeRange={artistTimeRange} setTimeRange={setArtistTimeRange} />
-          <TrackContainer tracks={topTracks} timeRange={trackTimeRange} setTimeRange={setTrackTimeRange} />
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "30px" }}>
+          <div>
+            <h2>Top Artists</h2>
+            <ArtistContainer artists={topArtists} timeRange={artistTimeRange} setTimeRange={setArtistTimeRange} />
+          </div>
+          <div>
+            <h2>Top Tracks</h2>
+            <TrackContainer tracks={topTracks} timeRange={trackTimeRange} setTimeRange={setTrackTimeRange} />
+          </div>
         </div>
       </div>
     </>

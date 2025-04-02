@@ -9,4 +9,4 @@ React app that allows you to check your live Spotify stats via the Spotify API
     * Top 3 artists
     * Top 3 songs
     * Top 3 albums
-    * TODO for these, make a dropdown list to select timeframe to display (short, medium, long term)
+        * You can see filter these to short term (4 weeks), medium term (6 months), and long term (1 year)

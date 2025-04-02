@@ -21,11 +21,11 @@ export default function TrackContainer({ tracks, timeRange, setTimeRange }: Trac
           </option>
         ))}
       </select>
-      <ul>
+      <ul style={{ listStyleType: "none", padding: 0 }}>
         {tracks.map((track) => (
-          <li key={track.id}>
+          <li key={track.id} style={{ display: "flex", alignItems: "center", marginBottom: 10 }}>
             <img src={track.album.images[0]?.url} alt={track.name} style={{ width: 50, borderRadius: "50%" }} />
-            {track.name}
+            <p>{track.name}</p>
           </li>
         ))}
       </ul>

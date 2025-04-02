@@ -22,11 +22,11 @@ export default function ArtistContainer({ artists, timeRange, setTimeRange }: Ar
           </option>
         ))}
       </select>
-      <ul>
+      <ul style={{ listStyleType: "none", padding: 0 }}>
         {artists.map((artist) => (
-          <li key={artist.id}>
+          <li key={artist.id} style={{ display: "flex", alignItems: "center", marginBottom: 10 }}>
             <img src={artist.images[0]?.url} alt={artist.name} style={{ width: 50, borderRadius: "50%" }} />
-            {artist.name}
+            <p>{artist.name}</p>
           </li>
         ))}
       </ul>
