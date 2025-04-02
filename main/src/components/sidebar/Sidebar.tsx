@@ -5,17 +5,13 @@ import { useNavigate } from 'react-router-dom';
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleNavigation = (path: string) => {
-    navigate(path);
-  };
-
   return (
     <AppBar position="sticky">
       <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <Box sx={{ display: 'flex', gap: '1rem' }}>
-          <Button color="inherit" onClick={() => handleNavigation('/')}>Home</Button>
-          <Button color="inherit" onClick={() => handleNavigation('/about')}>About</Button>
-          <Button color="inherit" onClick={() => handleNavigation('/services')}>Services</Button>
+        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+          <Button color="inherit" onClick={() => navigate('/home')}>Home</Button>
+          <Button color="inherit" onClick={() => navigate('/profile')}>Profile</Button>
+          <Button color="inherit" onClick={() => navigate('/recently-played')}>Recently Played</Button>
         </Box>
       </Toolbar>
     </AppBar>

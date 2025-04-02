@@ -6,6 +6,7 @@ import HomePage from "../pages/HomePage.tsx";
 import CallbackPage from "../pages/CallbackPage.tsx";
 import ProfilePage from "../pages/ProfilePage.tsx";
 import Sidebar from "../components/sidebar/Sidebar.tsx";
+import RecentlyPlayedPage from "../pages/RecentlyPlayedPage.tsx";
 
 const AppRoutes: React.FC = () => {
   const location = useLocation();  // Get the current route
@@ -21,6 +22,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/callback" element={<CallbackPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/recently-played" element={<RecentlyPlayedPage />} />
       </Routes>
     </>
   );
