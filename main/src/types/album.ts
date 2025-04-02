@@ -1,4 +1,4 @@
-// src/types/spotify.ts
+// album object used for getting albums
 
 export type ExternalUrls = {
     spotify: string;

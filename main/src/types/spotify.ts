@@ -1,7 +1,4 @@
 // src/types/spotify.ts
-
-import { Album } from "./album";
-
 export type ExplicitContent = {
     filter_enabled: boolean;
     filter_locked: boolean;
@@ -21,24 +18,6 @@ export type Image = {
     height: number;
     width: number;
 };
-
-export type Artist = {
-    external_urls: ExternalUrls;
-    followers: Followers;
-    genres: string[];
-    href: string;
-    id: string;
-    images: Image[];
-    name: string;
-    popularity: number;
-    type: 'artist';
-    uri: string;
-};
-
-export type Track = {
-    album: Album,
-
-}
 
 export type SpotifyProfile = {
     country: string;
