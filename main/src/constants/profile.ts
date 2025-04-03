@@ -9,3 +9,4 @@ export const TIME_RANGES = [
 
 export const TIME_RANGE_DEFAULT = SHORT_TERM;
 export const MAX_DISPLAY = 5; //number of artists/tracks to display on profile
+export const CACHE_EXPIRY_TIME = 1000 * 60 * 30; // 30 minutes

@@ -4,10 +4,8 @@ import { SpotifyProfile } from "../types/profile";
 import { Artist } from "../types/artist";
 import { Track } from "../types/track";
 import ArtistContainer from "../components/profile/ArtistContainer";
-import { TIME_RANGE_DEFAULT, MAX_DISPLAY } from "../constants/profile";
+import { TIME_RANGE_DEFAULT, MAX_DISPLAY, CACHE_EXPIRY_TIME } from "../constants/profile";
 import TrackContainer from "../components/profile/TrackContainer";
-
-const CACHE_EXPIRY_TIME = 1000 * 60 * 30; // 30 minutes
 
 const ProfilePage: React.FC = () => {
   const [data, setData] = useState<{
