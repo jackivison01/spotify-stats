@@ -58,7 +58,7 @@ export default function RecentlyPlayedPage() {
 
   return (
     <>
-      <h1>Currently Playing</h1>
+      <h1 style={{ textAlign: 'center' }}>Currently Playing</h1>
       <CurrentlyPlayingContainer loading={loading} currentTrack={currentTrack} />
       <RecentlyPlayed recentlyPlayed={recentlyPlayed} />
     </>
