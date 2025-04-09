@@ -59,7 +59,7 @@ export default function RecentlyPlayedPage() {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+    <>
       <h1>Currently Playing</h1>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 20 }}>
         {loading ? ( // Check the loading state
@@ -80,6 +80,6 @@ export default function RecentlyPlayedPage() {
         )}
       </div>
       <RecentlyPlayed recentlyPlayed={recentlyPlayed} />
-    </div>
+    </>
   );
 }
