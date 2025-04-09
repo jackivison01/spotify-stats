@@ -3,6 +3,7 @@ import { SpotifyProfile } from '../types/profile';
 import { Track } from '../types/track';
 import { Artist } from '../types/artist';
 import { CurrentlyPlaying } from '../types/currently_playing';
+import { RecentTrack } from '../types/recent_track';
 
 export async function getSpotifyProfile(accessToken: string): Promise<SpotifyProfile | null> {
     try {
@@ -69,6 +70,24 @@ export async function getCurrentlyPlaying(accessToken: string): Promise<Currentl
         return response.data ?? null;
     } catch (error: any) {
         console.error('Error fetching currently playing track:', error.response?.data || error.message);
+        return null;
+    }
+}
+
+export async function getRecentlyPlayed(accessToken: string, count: number): Promise<Track[] | null> {
+    try {
+        const response = await axios.get<{ items: RecentTrack[] }>(
+            `https://api.spotify.com/v1/me/player/recently-played?limit=${count}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        const tracks = response.data.items.map((item) => item.track); // Extracting the track from the RecentTrack object
+        return tracks;
+    } catch (error) {
+        console.error('Error fetching recently played tracks:', error);
         return null;
     }
 }
