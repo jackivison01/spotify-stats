@@ -1,11 +1,13 @@
-import { getCurrentlyPlaying } from "../services/api";
+import { getCurrentlyPlaying, getRecentlyPlayed } from "../services/api";
 import { useEffect, useState } from "react";
 import { CurrentlyPlaying } from "../types/currently_playing";
 import { Track } from "../types/album";
+import RecentlyPlayed from "../components/recently-played/RecentlyPlayed";
 
 export default function RecentlyPlayedPage() {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<CurrentlyPlaying | null>(null); //object for currently playing
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null); //current track object
+  const [recentlyPlayed, setRecentlyPlayed] = useState<Track[]>([]); //array of recently played tracks
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -22,7 +24,7 @@ export default function RecentlyPlayedPage() {
         if (data) {
           setCurrentlyPlaying(data);
           setCurrentTrack(data.item);
-          console.log(data.item);
+          //console.log(data.item);
         } else {
           console.log("No currently playing track.");
         }
@@ -33,7 +35,24 @@ export default function RecentlyPlayedPage() {
       }
     };
 
+    const fetchRecentlyPlayed = async () => {
+      const access_token = localStorage.getItem("spotify_access_token");
+      if (!access_token) {
+        console.error("Access token not found. Please log in.");
+        return;
+      }
+      try {
+        const data = await getRecentlyPlayed(access_token, 5);
+        if (data) {
+          setRecentlyPlayed(data);
+        }
+      } catch (error) {
+        console.log("Error fetching recently played data:", error);
+      }
+    };
+
     fetchCurrentlyPlaying();
+    fetchRecentlyPlayed();
     // Set interval to fetch currently playing track every 15 seconds
     const interval = setInterval(fetchCurrentlyPlaying, 15000);
     return () => clearInterval(interval);
@@ -60,6 +79,7 @@ export default function RecentlyPlayedPage() {
           <p>No track is currently playing.</p> // Message when no track is playing
         )}
       </div>
+      <RecentlyPlayed recentlyPlayed={recentlyPlayed} />
     </div>
   );
 }
