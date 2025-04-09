@@ -1,8 +1,9 @@
 import { getCurrentlyPlaying, getRecentlyPlayed } from "../services/api";
 import { useEffect, useState } from "react";
 import { CurrentlyPlaying } from "../types/currently_playing";
-import { Track } from "../types/album";
+import { Track } from "../types/track";
 import RecentlyPlayed from "../components/recently-played/RecentlyPlayed";
+import CurrentlyPlayingContainer from "../components/recently-played/CurrentlyPlayingContainer";
 
 export default function RecentlyPlayedPage() {
   const [currentlyPlaying, setCurrentlyPlaying] = useState<CurrentlyPlaying | null>(null); //object for currently playing
@@ -62,22 +63,7 @@ export default function RecentlyPlayedPage() {
     <>
       <h1>Currently Playing</h1>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 20 }}>
-        {loading ? ( // Check the loading state
-          <p>Loading currently playing...</p>
-        ) : (currentlyPlaying && currentTrack) ? (
-          <div style={{ textAlign: "center" }}>
-            <img
-              src={currentTrack.album.images[0]?.url}
-              alt="Album Cover"
-              style={{ width: 150 }}
-            />
-            <h2 style={{ whiteSpace: "normal", wordBreak: "break-word" }}>
-              {currentTrack.name} - {currentTrack.artists.map((artist) => artist.name).join(", ")}
-            </h2>
-          </div>
-        ) : (
-          <p>No track is currently playing.</p> // Message when no track is playing
-        )}
+        <CurrentlyPlayingContainer loading={loading} currentTrack={currentTrack} currentlyPlaying={currentlyPlaying} />
       </div>
       <RecentlyPlayed recentlyPlayed={recentlyPlayed} />
     </>
