@@ -20,6 +20,7 @@ export type Artist = {
 };
 
 export type Track = {
+    album: any;
     artists: Artist[];
     available_markets: string[];
     disc_number: number;

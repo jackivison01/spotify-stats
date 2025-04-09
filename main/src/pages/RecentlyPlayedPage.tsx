@@ -1,12 +1,10 @@
 import { getCurrentlyPlaying, getRecentlyPlayed } from "../services/api";
 import { useEffect, useState } from "react";
-import { CurrentlyPlaying } from "../types/currently_playing";
 import { Track } from "../types/track";
 import RecentlyPlayed from "../components/recently-played/RecentlyPlayed";
 import CurrentlyPlayingContainer from "../components/recently-played/CurrentlyPlayingContainer";
 
 export default function RecentlyPlayedPage() {
-  const [currentlyPlaying, setCurrentlyPlaying] = useState<CurrentlyPlaying | null>(null); //object for currently playing
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null); //current track object
   const [recentlyPlayed, setRecentlyPlayed] = useState<Track[]>([]); //array of recently played tracks
   const [loading, setLoading] = useState<boolean>(true);
@@ -23,8 +21,7 @@ export default function RecentlyPlayedPage() {
       try {
         const data = await getCurrentlyPlaying(access_token);
         if (data) {
-          setCurrentlyPlaying(data);
-          setCurrentTrack(data.item);
+          setCurrentTrack(data);
           //console.log(data.item);
         } else {
           console.log("No currently playing track.");
@@ -62,9 +59,7 @@ export default function RecentlyPlayedPage() {
   return (
     <>
       <h1>Currently Playing</h1>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 20 }}>
-        <CurrentlyPlayingContainer loading={loading} currentTrack={currentTrack} currentlyPlaying={currentlyPlaying} />
-      </div>
+      <CurrentlyPlayingContainer loading={loading} currentTrack={currentTrack} />
       <RecentlyPlayed recentlyPlayed={recentlyPlayed} />
     </>
   );

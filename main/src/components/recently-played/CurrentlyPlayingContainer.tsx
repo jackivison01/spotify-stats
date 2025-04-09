@@ -1,17 +1,15 @@
 import { Track } from "../../types/track";
-import { CurrentlyPlaying } from "../../types/currently_playing";
 interface CurrentlyPlayingProps {
   loading: boolean; // Loading state
   currentTrack: Track | null; // Current track object
-  currentlyPlaying: CurrentlyPlaying | null; // Currently playing object
 }
 
-export default function CurrentlyPlayingContainer({ loading, currentTrack, currentlyPlaying }: CurrentlyPlayingProps) {
+export default function CurrentlyPlayingContainer({ loading, currentTrack }: CurrentlyPlayingProps) {
   return (
     <>
       {loading ? ( // Check the loading state
         <p>Loading currently playing...</p>
-      ) : (currentlyPlaying && currentTrack) ? (
+      ) : (currentTrack) ? (
         <div style={{ textAlign: "center" }}>
           <img
             src={currentTrack.album.images[0]?.url}
