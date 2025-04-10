@@ -6,14 +6,14 @@ interface RecentlyPlayedProps {
 
 export default function RecentlyPlayed({ recentlyPlayed }: RecentlyPlayedProps) {
   return (
-    <div style={{ padding: "1rem", flexDirection: "row" }}>
+    <div style={{ padding: "1rem", flexDirection: "row", textAlign: "center" }}>
       <h1 style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>Recently Played</h1>
       <div
         style={{
           display: "flex",
           flexWrap: "wrap",
           gap: "1rem",
-          justifyContent: "flex-start"
+          justifyContent: "center"
         }}
       >
         {recentlyPlayed.map((track) => (
