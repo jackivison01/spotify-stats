@@ -4,7 +4,7 @@ import { SpotifyProfile } from "../types/profile";
 import { Artist } from "../types/artist";
 import { Track } from "../types/track";
 import ArtistContainer from "../components/profile/ArtistContainer";
-import { TIME_RANGE_DEFAULT, MAX_DISPLAY, CACHE_EXPIRY_TIME } from "../constants/profile";
+import { TIME_RANGE_DEFAULT, MAX_DISPLAY, CACHE_EXPIRY_TIME, TIME_RANGES } from "../constants/profile";
 import TrackContainer from "../components/profile/TrackContainer";
 import { Album } from "../types/album";
 import AlbumContainer from "../components/profile/AlbumContainer";
@@ -22,6 +22,8 @@ const ProfilePage: React.FC = () => {
     topAlbums: [],
   });
 
+  const [timeRange, setTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
+  /** State for individual time ranges for artists, tracks, and albums */
   const [artistTimeRange, setArtistTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
   const [trackTimeRange, setTrackTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
   const [albumTimeRange, setAlbumTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
@@ -90,7 +92,7 @@ const ProfilePage: React.FC = () => {
     };
 
     fetchData();
-  }, [artistTimeRange, trackTimeRange, albumTimeRange]);
+  }, [timeRange, artistTimeRange, trackTimeRange, albumTimeRange]);
 
   return (
     <>
@@ -107,6 +109,27 @@ const ProfilePage: React.FC = () => {
         )}
       </div>
       <div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "20px" }}>
+          <h3>Set Time Range For All Sections</h3>
+          <select
+            id="timeRange"
+            value={timeRange}
+            onChange={(e) => {
+              setTimeRange(e.target.value);
+              setArtistTimeRange(e.target.value);
+              setTrackTimeRange(e.target.value);
+              setAlbumTimeRange(e.target.value);
+            }}
+            style={{ padding: "8px", fontSize: "16px", borderRadius: "4px", minWidth: "200px" }}
+          >
+            {TIME_RANGES.map(({ label, value }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", gap: "30px" }}>
           <div style={{ flex: 1 }}>
             <h2>Top Artists</h2>
