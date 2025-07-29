@@ -43,7 +43,7 @@ const ProfilePage: React.FC = () => {
     const cachedUserProfile = getCachedData("user_profile");
     const cachedTopArtists = getCachedData(`top_artists_${artistTimeRange}`);
     const cachedTopTracks = getCachedData(`top_tracks_${trackTimeRange}`);
-    const cachedTopAlbums = getCachedData(`top_albums_${trackTimeRange}`);
+    const cachedTopAlbums = getCachedData(`top_albums_${albumTimeRange}`);
 
     if (cachedUserProfile && cachedTopArtists && cachedTopTracks && cachedTopAlbums) {
       setData({ userProfile: cachedUserProfile, topArtists: cachedTopArtists, topTracks: cachedTopTracks, topAlbums: cachedTopAlbums });
@@ -74,15 +74,15 @@ const ProfilePage: React.FC = () => {
         const allAlbums = await Promise.all(albumPromises);
 
         // Filter out nulls
-        const top_albums: Album[] = allAlbums.filter((album): album is Album => album !== null);
-        const albumNames = top_albums.map(album => album.name);
-        console.log("Top Albums derived from top tracks:", albumNames.slice(0, 5));
+        const top_albums: Album[] = allAlbums.filter((album): album is Album => album !== null).slice(0, MAX_DISPLAY);
 
-        setData({ userProfile: user_data, topArtists: top_artists, topTracks: top_tracks, topAlbums: top_albums.slice(0, 5) });
+        setData({ userProfile: user_data, topArtists: top_artists, topTracks: top_tracks, topAlbums: top_albums });
 
         localStorage.setItem("user_profile", JSON.stringify({ data: user_data, timestamp: Date.now() }));
         localStorage.setItem(`top_artists_${artistTimeRange}`, JSON.stringify({ data: top_artists, timestamp: Date.now() }));
         localStorage.setItem(`top_tracks_${trackTimeRange}`, JSON.stringify({ data: top_tracks, timestamp: Date.now() }));
+        localStorage.setItem(`top_albums_${albumTimeRange}`, JSON.stringify({ data: top_albums, timestamp: Date.now() }));
+        console.log("Data fetched and cached successfully.");
 
       } catch (error) {
         console.error("Error fetching profile:", error);
@@ -123,7 +123,7 @@ const ProfilePage: React.FC = () => {
         </div>
         <div>
           <p style={{ textAlign: "center", marginTop: 20, color: "#888" }}>
-            Note: Data is cached for {CACHE_EXPIRY_TIME / 1000} seconds to reduce API calls.
+            Note: Data is cached for {CACHE_EXPIRY_TIME / (1000 * 60)} minutes to reduce API calls.
           </p>
         </div>
       </div>
