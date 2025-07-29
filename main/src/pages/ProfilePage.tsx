@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { getSpotifyProfile, getTopArtists, getTopTracks } from "../services/api";
+import { getSpotifyProfile, getTopArtists, getTopTracks, deriveTopAlbumsFromTracks, getAlbumDetails } from "../services/api";
 import { SpotifyProfile } from "../types/profile";
 import { Artist } from "../types/artist";
 import { Track } from "../types/track";
 import ArtistContainer from "../components/profile/ArtistContainer";
 import { TIME_RANGE_DEFAULT, MAX_DISPLAY, CACHE_EXPIRY_TIME } from "../constants/profile";
 import TrackContainer from "../components/profile/TrackContainer";
+import { Album } from "../types/album";
+import AlbumContainer from "../components/profile/AlbumContainer";
 
 const ProfilePage: React.FC = () => {
   const [data, setData] = useState<{
     userProfile: SpotifyProfile | null;
     topArtists: Artist[];
     topTracks: Track[];
+    topAlbums: Album[];
   }>({
     userProfile: null,
     topArtists: [],
     topTracks: [],
+    topAlbums: [],
   });
 
   const [artistTimeRange, setArtistTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
   const [trackTimeRange, setTrackTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
+  const [albumTimeRange, setAlbumTimeRange] = useState<string>(TIME_RANGE_DEFAULT);
 
   /** Helper function to retrieve cached data with expiration check */
   const getCachedData = (key: string) => {
@@ -38,9 +43,10 @@ const ProfilePage: React.FC = () => {
     const cachedUserProfile = getCachedData("user_profile");
     const cachedTopArtists = getCachedData(`top_artists_${artistTimeRange}`);
     const cachedTopTracks = getCachedData(`top_tracks_${trackTimeRange}`);
+    const cachedTopAlbums = getCachedData(`top_albums_${trackTimeRange}`);
 
-    if (cachedUserProfile && cachedTopArtists && cachedTopTracks) {
-      setData({ userProfile: cachedUserProfile, topArtists: cachedTopArtists, topTracks: cachedTopTracks });
+    if (cachedUserProfile && cachedTopArtists && cachedTopTracks && cachedTopAlbums) {
+      setData({ userProfile: cachedUserProfile, topArtists: cachedTopArtists, topTracks: cachedTopTracks, topAlbums: cachedTopAlbums });
       console.log("Loaded from cache.");
       return;
     }
@@ -59,7 +65,20 @@ const ProfilePage: React.FC = () => {
           cachedTopTracks || getTopTracks(access_token, MAX_DISPLAY, trackTimeRange),
         ]);
 
-        setData({ userProfile: user_data, topArtists: top_artists, topTracks: top_tracks });
+        const top_50_tracks = await getTopTracks(access_token, 50, albumTimeRange);
+        const top_albums_ids: { albumId: string; count: number }[] = deriveTopAlbumsFromTracks(top_50_tracks || []);
+        const albumPromises = top_albums_ids.map((album) =>
+          getAlbumDetails(access_token, album.albumId)
+        );
+
+        const allAlbums = await Promise.all(albumPromises);
+
+        // Filter out nulls
+        const top_albums: Album[] = allAlbums.filter((album): album is Album => album !== null);
+        const albumNames = top_albums.map(album => album.name);
+        console.log("Top Albums derived from top tracks:", albumNames.slice(0, 5));
+
+        setData({ userProfile: user_data, topArtists: top_artists, topTracks: top_tracks, topAlbums: top_albums.slice(0, 5) });
 
         localStorage.setItem("user_profile", JSON.stringify({ data: user_data, timestamp: Date.now() }));
         localStorage.setItem(`top_artists_${artistTimeRange}`, JSON.stringify({ data: top_artists, timestamp: Date.now() }));
@@ -71,7 +90,7 @@ const ProfilePage: React.FC = () => {
     };
 
     fetchData();
-  }, [artistTimeRange, trackTimeRange]);
+  }, [artistTimeRange, trackTimeRange, albumTimeRange]);
 
   return (
     <>
@@ -96,6 +115,10 @@ const ProfilePage: React.FC = () => {
           <div style={{ flex: 1 }}>
             <h2>Top Tracks</h2>
             <TrackContainer tracks={data.topTracks} timeRange={trackTimeRange} setTimeRange={setTrackTimeRange} />
+          </div>
+          <div style={{ flex: 1 }}>
+            <h2>Top Albums</h2>
+            <AlbumContainer albums={data.topAlbums} timeRange={albumTimeRange} setTimeRange={setAlbumTimeRange} />
           </div>
         </div>
         <div>

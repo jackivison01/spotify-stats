@@ -4,6 +4,7 @@ import { Track } from '../types/track';
 import { Artist } from '../types/artist';
 import { RecentTrack } from '../types/recent_track';
 import { ErrorResponse } from '../types/error';
+import { Album } from '../types/album';
 
 function isErrorResponse(error: unknown): error is ErrorResponse {
     return typeof error === 'object' && error !== null && 'response' in error;
@@ -74,7 +75,7 @@ export async function getCurrentlyPlaying(accessToken: string): Promise<Track | 
         return response.data.item;
     } catch (error: unknown) {
         if (isErrorResponse(error)) {
-            console.error('Error fetching currently playing track:', error.response?.data || error.message);
+            console.error(error.message);
         } else if (error instanceof Error) {
             console.error('Error fetching currently playing track:', error.message);
         } else {
@@ -102,3 +103,34 @@ export async function getRecentlyPlayed(accessToken: string, count: number): Pro
     }
 }
 
+export async function getAlbumDetails(accessToken: string, albumId: string): Promise<Album | null> {
+    try {
+        const response = await axios.get<Album>(
+            `https://api.spotify.com/v1/albums/${albumId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching album details:', error);
+        return null;
+    }
+}
+
+export function deriveTopAlbumsFromTracks(tracks: Track[]): { albumId: string; count: number }[] {
+    const albumCountMap: Record<string, number> = {};
+
+    tracks.forEach((track) => {
+        const albumId = track.album?.id;
+        if (albumId) {
+            albumCountMap[albumId] = (albumCountMap[albumId] || 0) + 1;
+        }
+    });
+
+    return Object.entries(albumCountMap)
+        .map(([albumId, count]) => ({ albumId, count }))
+        .sort((a, b) => b.count - a.count); // Sort descending by count
+}
