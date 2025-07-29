@@ -3,6 +3,11 @@ import { SpotifyProfile } from '../types/profile';
 import { Track } from '../types/track';
 import { Artist } from '../types/artist';
 import { RecentTrack } from '../types/recent_track';
+import { ErrorResponse } from '../types/error';
+
+function isErrorResponse(error: unknown): error is ErrorResponse {
+    return typeof error === 'object' && error !== null && 'response' in error;
+}
 
 export async function getSpotifyProfile(accessToken: string): Promise<SpotifyProfile | null> {
     try {
@@ -67,8 +72,14 @@ export async function getCurrentlyPlaying(accessToken: string): Promise<Track | 
             }
         );
         return response.data.item;
-    } catch (error: any) {
-        console.error('Error fetching currently playing track:', error.response?.data || error.message);
+    } catch (error: unknown) {
+        if (isErrorResponse(error)) {
+            console.error('Error fetching currently playing track:', error.response?.data || error.message);
+        } else if (error instanceof Error) {
+            console.error('Error fetching currently playing track:', error.message);
+        } else {
+            console.error('Unknown error fetching currently playing track:', error);
+        }
         return null;
     }
 }
