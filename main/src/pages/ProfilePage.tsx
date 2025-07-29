@@ -98,6 +98,11 @@ const ProfilePage: React.FC = () => {
             <TrackContainer tracks={data.topTracks} timeRange={trackTimeRange} setTimeRange={setTrackTimeRange} />
           </div>
         </div>
+        <div>
+          <p style={{ textAlign: "center", marginTop: 20, color: "#888" }}>
+            Note: Data is cached for {CACHE_EXPIRY_TIME / 1000} seconds to reduce API calls.
+          </p>
+        </div>
       </div>
     </>
   );
